@@ -3,242 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1 Year Anniversary Jana 💗</title>
+    <title>1 Year of Us - Jana 💗</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Great+Vibes&family=Poppins:wght@300;400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-dark: #0f0505;
-            --glass: rgba(255, 255, 255, 0.05);
+            --bg: #0f0505;
             --accent: #ff0a54;
             --gold: #ffbd59;
-            --text: #ffffff;
+            --glass: rgba(255, 255, 255, 0.05);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(255, 10, 84, 0.15), transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(255, 189, 89, 0.1), transparent 40%);
-            color: var(--text);
+            background-color: var(--bg);
+            color: white;
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
-            height: 100vh;
-            width: 100%;
-            position: fixed;
-            overflow: hidden;
+            min-height: 100vh;
         }
 
-        /* --- PASSWORD MODAL --- */
-        .modal-backdrop {
-            position: fixed; inset: 0; background: rgba(10, 5, 5, 0.98);
-            backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center;
-            z-index: 10000; transition: opacity 0.5s ease;
-        }
-        .modal-box {
-            background: var(--glass); border: 1px solid rgba(255,255,255,0.1);
-            padding: 40px; border-radius: 20px; text-align: center; width: 380px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-        }
-        .modal-box h2 { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: var(--gold); }
-        .modal-box input {
-            width: 100%; padding: 12px; margin: 15px 0; background: rgba(0,0,0,0.2);
-            border: 1px solid var(--accent); border-radius: 8px; color: white; text-align: center;
-        }
-        .modal-btn {
-            background: var(--accent); border: none; padding: 10px 25px; color: white;
-            border-radius: 50px; font-weight: bold; cursor: pointer;
+        /* --- FIXED 5:55 AM CLOCK --- */
+        .fixed-clock {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--gold);
+            z-index: 1000; text-shadow: 0 0 10px var(--accent); letter-spacing: 2px;
+            background: rgba(0,0,0,0.3); padding: 5px 20px; border-radius: 50px;
+            border: 1px solid rgba(255,189,89,0.3);
         }
 
-        /* --- JELLY CONTAINER --- */
-        #main-container {
-            position: absolute; top: 0; left: 0; width: 100%;
-            will-change: transform; padding-bottom: 100px;
+        /* --- OLD POPUP STYLE --- */
+        #authModal {
+            position: fixed; inset: 0; background: #000;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10000; transition: 0.6s ease-in-out;
+        }
+        .auth-box {
+            background: var(--glass); padding: 40px; border-radius: 20px;
+            text-align: center; width: 90%; max-width: 400px; border: 1px solid var(--accent);
+            box-shadow: 0 0 30px rgba(255,10,84,0.3);
+        }
+        .auth-box h2 { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--accent); margin-bottom: 10px; }
+        .auth-box input {
+            width: 100%; padding: 15px; margin: 10px 0; background: #111;
+            border: 1px solid var(--gold); border-radius: 10px; color: white; text-align: center;
+        }
+        .auth-btn {
+            background: linear-gradient(45deg, var(--accent), #ff6b9d);
+            border: none; padding: 12px 30px; color: white; border-radius: 50px;
+            font-weight: bold; cursor: pointer; margin-top: 10px;
         }
 
-        /* --- FLOATING HEARTS --- */
-        .hearts-bg { position: fixed; inset: 0; pointer-events: none; z-index: -1; }
-        .floater { position: absolute; color: var(--accent); opacity: 0.5; animation: floatUp linear infinite; }
+        /* --- CONTENT CONTAINER --- */
+        #main-content {
+            display: none; /* Hidden until password */
+            opacity: 0; transition: opacity 1s;
+            will-change: transform;
+        }
+
+        /* --- HEARTS --- */
+        .hearts-container { position: fixed; inset: 0; pointer-events: none; z-index: -1; }
+        .heart { position: absolute; color: var(--accent); animation: floatUp linear infinite; }
         @keyframes floatUp {
-            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            50% { opacity: 0.7; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(110vh) scale(0); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
 
-        /* --- SECTIONS --- */
-        section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
-        .section-title {
-            font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; margin-bottom: 40px;
-            background: linear-gradient(to right, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        /* --- HEADER --- */
         header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        header h1 { font-family: 'Playfair Display', serif; font-size: 4rem; text-shadow: 0 0 20px var(--accent); }
-        .badge { background: var(--gold); color: #000; padding: 5px 20px; border-radius: 20px; font-weight: bold; margin-bottom: 15px; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; text-shadow: 0 0 20px var(--accent); }
 
-        /* --- TIMELINE DATES --- */
-        .timeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .date-card { background: var(--glass); padding: 20px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .date-card b { display: block; font-size: 1.5rem; color: var(--gold); }
+        section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+        .title { font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; margin-bottom: 40px; color: var(--gold); }
 
-        /* --- FAVORITE THINGS (OLD STYLE RESTORED) --- */
-        .fav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .fav-card {
-            background: var(--glass); border-radius: 15px; padding: 25px;
-            border-left: 4px solid var(--accent); transition: 0.3s;
+        /* GRID FIX */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        .card b { color: var(--gold); font-size: 1.6rem; display: block; margin-bottom: 5px; }
+        
+        .mem-img { width: 100%; border-radius: 15px; margin-bottom: 10px; border: 2px solid rgba(255,255,255,0.1); }
+        video { width: 100%; border-radius: 15px; margin-bottom: 10px; }
+
+        /* --- THANK YOU SECTION --- */
+        .thank-you-box {
+            text-align: center; background: rgba(255,10,84,0.05); padding: 50px 30px;
+            border-radius: 30px; border: 2px dashed var(--accent); margin-top: 50px;
         }
-        .fav-card:hover { transform: scale(1.03); background: rgba(255, 10, 84, 0.1); }
-        .fav-card h3 { color: var(--gold); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        .fav-card p { color: #ccc; font-size: 0.95rem; }
-
-        /* --- GALLERY & VIDEOS --- */
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .item-frame { background: var(--glass); padding: 10px; border-radius: 10px; text-align: center; }
-        .item-frame img, .item-frame video { width: 100%; border-radius: 8px; aspect-ratio: 1/1; object-fit: cover; }
-        .item-frame video { aspect-ratio: 16/9; }
-
-        footer { text-align: center; padding: 40px; color: #555; font-size: 0.8rem; }
+        .thank-you-box h2 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--gold); }
+        .thank-you-box p { font-size: 1.1rem; line-height: 1.8; color: #ddd; margin: 20px 0; }
+        .names { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--accent); }
     </style>
 </head>
 <body>
 
-    <div class="modal-backdrop" id="auth">
-        <div class="modal-box">
-            <h2>Our Secret Space 🔐</h2>
-            <input type="text" id="nameIn" placeholder="Enter Your Name">
-            <input type="password" id="passIn" placeholder="Secret Word">
-            <button class="modal-btn" onclick="openPage()">Unlock Memories</button>
-            <p id="err" style="color:var(--accent); display:none; margin-top:10px;">Incorrect! Password is 'Bebe'</p>
+    <div class="fixed-clock">5:55 AM</div>
+
+    <div id="authModal">
+        <div class="auth-box">
+            <h2>Welcome My Universe</h2>
+            <p style="color:#aaa; margin-bottom:15px;">Enter details to enter our world</p>
+            <input type="text" id="nameIn" placeholder="Your Name" autocomplete="off">
+            <input type="password" id="passIn" placeholder="Secret Word (Bebe)" autocomplete="off">
+            <button class="auth-btn" onclick="unlock()">Unlock Love ❤️</button>
+            <p id="err" style="color:red; font-size:0.8rem; margin-top:10px; display:none;">Password is 'Bebe' jana!</p>
         </div>
     </div>
 
-    <div class="hearts-bg" id="hearts"></div>
+    <div class="hearts-container" id="hearts"></div>
 
-    <div id="main-container">
+    <div id="main-content">
         <header>
-            <div class="badge">1st Anniversary</div>
-            <h1 id="userName">Jana & Me</h1>
-            <p style="font-family:'Great Vibes',cursive; font-size: 2rem; color:var(--accent);">Forever in Love</p>
+            <div style="background:var(--accent); padding:5px 20px; border-radius:50px; font-weight:bold; margin-bottom:15px;">1st Anniversary</div>
+            <h1 id="userHeading">Munnu & Me</h1>
+            <p style="font-family:'Great Vibes', cursive; font-size:2.2rem; color:var(--gold);">Forever and Always</p>
         </header>
 
         <section>
-            <h2 class="section-title">Important Dates</h2>
-            <div class="timeline-grid">
-                <div class="date-card"><b>15 . 05 . 2008</b><span>My Birthday</span></div>
-                <div class="date-card"><b>28 . 09 . 2009</b><span>Jana's Birthday</span></div>
-                <div class="date-card" style="border-color:var(--gold)"><b>28 . 09 . 2024</b><span>Our Anniversary ❤️</span></div>
-                <div class="date-card"><b>19 . 01 . 2025</b><span>Our Aniversary</span></div>
-            </div>
-        </section>
-
-        <section id="favorites">
-            <h2 class="section-title">Our Favorite Things</h2>
-            <div class="fav-grid">
-                <div class="fav-card">
-                    <h3>🍔 Favorite Food</h3>
-                    <p>Momo, everything we share together from the same plate.</p>
-                </div>
-                <div class="fav-card">
-                    <h3>📍 Favorite Place</h3>
-                    <p>Hubby ❤️, as long as I am holding your hand. But specially under the night sky.</p>
-                </div>
-                <div class="fav-card">
-                    <h3>🎵 Favorite Song</h3>
-                    <p>mere humsafar , ek tarfaThe one that reminds me of your smile and the way you look at me.</p>
-                </div>
-                <div class="fav-card">
-                    <h3>✨ Favorite Moment</h3>
-                    <p>That first "I Love You" and the way you shyly looked away.</p>
-                </div>
+            <h2 class="title">Special Dates</h2>
+            <div class="grid">
+                <div class="card"><b>15.05.2008</b>My Birthday</div>
+                <div class="card"><b>28.09.2009</b>Jana's Birthday</div>
+                <div class="card" style="border: 1px solid var(--accent);"><b>28.09.2024</b>Our Anniversary ❤️</div>
+                <div class="card"><b>19.01.2025</b>Special Memory</div>
             </div>
         </section>
 
         <section>
-            <h2 class="section-title">Captured Memories</h2>
-            <div class="gallery">
-                <div class="item-frame"><img src="imagekeep/1.jpg"><p>Morning Vibe</p></div>
-                <div class="item-frame"><img src="imagekeep/2.jpg"><p>That Smile</p></div>
-                <div class="item-frame"><img src="imagekeep/3.jpg"><p>Us Forever</p></div>
-                <div class="item-frame"><img src="imagekeep/4.jpg"><p>Special Trip</p></div>
-                <div class="item-frame"><img src="imagekeep/5.jpg"><p>Our First Date</p></div>
+            <h2 class="title">Our Favorites</h2>
+            <div class="grid">
+                <div class="card"><h3>🍔 Favorite Food</h3><p>Momo,Chatpate and everything we share together from the same plate.</p></div>
+                <div class="card"><h3>📍 Favorite Place</h3><p>Anywhere, Especially Hubby's Heart,as long as I am holding your hand. Specially under the stars.</p></div>
+                <div class="card"><h3>🎵 Favorite Song</h3><p>Mere Humsafar, Ek Tarfa ,every song that reminds me of your beautiful smile.</p></div>
             </div>
         </section>
 
         <section>
-            <h2 class="section-title">Video Moments</h2>
-            <div class="gallery">
-                <div class="item-frame"><video controls><source src="imagekeep/1Video.mp4"></video></div>
-                <div class="item-frame"><video controls><source src="imagekeep/2Videos.mp4"></video></div>
-                <div class="item-frame"><video controls><source src="imagekeep/Video3.mp4"></video></div>
+            <h2 class="title">Our Memories</h2>
+            <div class="grid">
+                <div class="card"><img src="imagekeep/1.jpg" class="mem-img"><p>The Beginning 💖</p></div>
+                <div class="card"><img src="imagekeep/2.jpg" class="mem-img"><p>Your Beautiful Smile 😊</p></div>
+                <div class="card"><img src="imagekeep/3.jpg" class="mem-img"><p>Us Forever 🧿</p></div>
             </div>
         </section>
 
-        <section style="text-align:center;">
-            <div style="background:var(--glass); padding:40px; border-radius:20px; font-style:italic;">
-                "Ek saal ho gaya, par lagta hai kal ki baat hai...<br>
-                Aapka saath mere liye sabse badi saugaat hai.<br>
-                Hamesha aise hi muskurate rahiyw meri jana,<br>
-                Kyuki meri khushi sirf Aapke saath hai."
-                <br><br>
-                <b style="color:var(--gold)">- Happy Anniversary Bebe ❤️</b>
+        <section>
+            <h2 class="title">Captured Moments</h2>
+            <div class="grid">
+                <div class="card"><video controls><source src="imagekeep/1Video.mp4"></video></div>
+                <div class="card"><video controls><source src="imagekeep/2Videos.mp4"></video></div>
+                <div class="card"><video controls><source src="imagekeep/Video3.mp4"></video></div>
             </div>
         </section>
 
-        <footer>Made with Love for Jana</footer>
+        <section style="text-align: center;">
+            <div style="background:var(--glass); padding:40px; border-radius:20px; border-left: 5px solid var(--accent);">
+                <p style="font-style: italic; font-size: 1.2rem;">
+                    "Aapk saath hona hi kaafi hai,<br>
+                    Mere chehre ki muskurahat ke liye.<br>
+                    Ek saal toh bas ek shuruat hai,<br>
+                    Humein saath rehna hai puri qayamat ke liye."
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <div class="thank-you-box">
+                <h2>Thank You ❤️Jana</h2>
+                <p>
+                    हमेशा मेरे साथ रहने के लिए आपका बहुत-बहुत शुक्रिया। ऐसे ही मेरे साथ रहिए, हमसे प्यार करते रहिए और हमें ढेर सारा प्यार देते रहिए। हमें समझाइए, हमें डांटिए, और हमें हमेशा ऐसे ही खुश रखिए। हम दोनों हमेशा ऐसे ही साथ रहें, यही दुआ है।
+                </p>
+                <div class="names"> Munnu  & Farhan</div>
+                <div style="font-size: 2rem; margin-top: 15px;">💖🧿❤️</div>
+            </div>
+        </section>
+
+        <footer style="text-align: center; padding: 40px; color: #666; font-size: 0.8rem;">
+            Made with infinite love for you.
+        </footer>
     </div>
 
     <script>
-        // Password Logic
-        function openPage() {
+        function unlock() {
             const pass = document.getElementById('passIn').value;
             const name = document.getElementById('nameIn').value;
             if(pass === 'Bebe') {
-                document.getElementById('auth').style.opacity = '0';
-                setTimeout(()=> document.getElementById('auth').style.display='none', 500);
-                if(name) document.getElementById('userName').innerText = name + " & Me";
+                const modal = document.getElementById('authModal');
+                const content = document.getElementById('main-content');
+                
+                modal.style.transform = 'translateY(-100%)';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    content.style.display = 'block';
+                    setTimeout(() => { content.style.opacity = '1'; }, 50);
+                }, 600);
+
+                if(name) document.getElementById('userHeading').innerText = name + " & Me";
+                initJelly();
             } else {
                 document.getElementById('err').style.display = 'block';
             }
         }
 
-        // Hearts
+        // Hearts Generator
         const heartContainer = document.getElementById('hearts');
         for (let i = 0; i < 30; i++) {
             const h = document.createElement('div');
-            h.classList.add('floater');
+            h.classList.add('heart');
             h.innerText = '❤️';
             h.style.left = Math.random() * 100 + 'vw';
-            h.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            h.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            h.style.animationDuration = (Math.random() * 3 + 4) + 's';
             h.style.animationDelay = Math.random() * 5 + 's';
             heartContainer.appendChild(h);
         }
 
-        // JELLY SCROLL
-        const container = document.getElementById('main-container');
-        let current = 0, target = 0, skew = 0;
+        // Jelly Scroll Function
+        function initJelly() {
+            const container = document.getElementById('main-content');
+            let current = 0, target = 0, skew = 0;
 
-        function scrollAnimate() {
-            target = window.scrollY;
-            let diff = target - current;
-            current += diff * 0.1;
-            skew = diff * 0.15;
-            if (skew > 8) skew = 8; if (skew < -8) skew = -8;
-            container.style.transform = `translateY(-${current}px) skewY(${skew}deg)`;
-            requestAnimationFrame(scrollAnimate);
-        }
-
-        window.addEventListener('load', () => {
-            document.body.style.height = container.getBoundingClientRect().height + 'px';
+            function scrollAnimate() {
+                target = window.scrollY;
+                current += (target - current) * 0.1;
+                skew = (target - current) * 0.15;
+                if (skew > 7) skew = 7; if (skew < -7) skew = -7;
+                container.style.transform = `skewY(${skew}deg)`;
+                requestAnimationFrame(scrollAnimate);
+            }
             scrollAnimate();
-        });
-        window.addEventListener('resize', () => {
-            document.body.style.height = container.getBoundingClientRect().height + 'px';
-        });
+        }
     </script>
 </body>
 </html>
-                  
+                                                                                                                                             
