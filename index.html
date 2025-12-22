@@ -9,91 +9,99 @@
 
     <style>
         :root {
-            --bg: #0f0505;
-            --accent: #ff0a54;
-            --gold: #ffbd59;
-            --glass: rgba(255, 255, 255, 0.05);
+            --bg: #2d0b13; 
+            --accent: #ff4d6d;
+            --gold: #d4af37;
+            --wine-dark: #1a0509;
+            --glass: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg);
+            background: linear-gradient(135deg, var(--wine-dark), var(--bg), var(--wine-dark));
             color: white;
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* --- FIXED 5:55 AM CLOCK --- */
+        /* --- CLOCK --- */
         .fixed-clock {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--gold);
+            font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--gold);
             z-index: 1000; text-shadow: 0 0 10px var(--accent); letter-spacing: 2px;
-            background: rgba(0,0,0,0.3); padding: 5px 20px; border-radius: 50px;
-            border: 1px solid rgba(255,189,89,0.3);
+            background: rgba(0,0,0,0.5); padding: 8px 25px; border-radius: 50px;
+            border: 1px solid var(--gold);
         }
 
-        /* --- OLD POPUP STYLE --- */
+        /* --- AUTH MODAL --- */
         #authModal {
-            position: fixed; inset: 0; background: #000;
+            position: fixed; inset: 0; background: var(--wine-dark);
             display: flex; align-items: center; justify-content: center;
-            z-index: 10000; transition: 0.6s ease-in-out;
+            z-index: 10000; transition: 0.8s;
         }
         .auth-box {
-            background: var(--glass); padding: 40px; border-radius: 20px;
-            text-align: center; width: 90%; max-width: 400px; border: 1px solid var(--accent);
-            box-shadow: 0 0 30px rgba(255,10,84,0.3);
+            background: var(--glass); padding: 40px; border-radius: 30px;
+            text-align: center; width: 90%; max-width: 400px; border: 1px solid var(--gold);
+            backdrop-filter: blur(10px);
         }
-        .auth-box h2 { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--accent); margin-bottom: 10px; }
         .auth-box input {
-            width: 100%; padding: 15px; margin: 10px 0; background: #111;
-            border: 1px solid var(--gold); border-radius: 10px; color: white; text-align: center;
+            width: 100%; padding: 15px; margin: 12px 0; background: rgba(0,0,0,0.4);
+            border: 1px solid var(--accent); border-radius: 15px; color: white; text-align: center; outline: none;
         }
         .auth-btn {
-            background: linear-gradient(45deg, var(--accent), #ff6b9d);
-            border: none; padding: 12px 30px; color: white; border-radius: 50px;
-            font-weight: bold; cursor: pointer; margin-top: 10px;
+            background: linear-gradient(45deg, var(--gold), #f9d423);
+            border: none; padding: 14px 35px; color: #300; border-radius: 50px;
+            font-weight: bold; cursor: pointer; transition: 0.3s;
         }
 
-        /* --- CONTENT CONTAINER --- */
-        #main-content {
-            display: none; /* Hidden until password */
-            opacity: 0; transition: opacity 1s;
-            will-change: transform;
+        /* --- GREETING OVERLAY --- */
+        #greetingOverlay {
+            position: fixed; inset: 0; background: var(--wine-dark); z-index: 11000;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 20px;
+        }
+        .greet-card {
+            background: var(--glass); border: 2px solid var(--gold); padding: 40px;
+            border-radius: 30px; max-width: 500px;
+        }
+        .greet-card h1 { font-family: 'Great Vibes', cursive; color: var(--gold); font-size: 3rem; }
+        .reply-box {
+            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--gold);
+            background: rgba(255,255,255,0.1); color: white; text-align: center; margin-top: 15px;
         }
 
-        /* --- HEARTS --- */
-        .hearts-container { position: fixed; inset: 0; pointer-events: none; z-index: -1; }
-        .heart { position: absolute; color: var(--accent); animation: floatUp linear infinite; }
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) scale(0); opacity: 0; }
-            50% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-        }
+        /* --- MAIN CONTENT --- */
+        #main-content { display: none; opacity: 0; transition: 1.5s; }
 
         header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        header h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; text-shadow: 0 0 20px var(--accent); }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 3.2rem; }
+        .heart-beat { display: inline-block; color: var(--accent); animation: heartbeat 1.2s infinite; }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); } }
 
-        section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+        section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
         .title { font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; margin-bottom: 40px; color: var(--gold); }
 
-        /* GRID FIX */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
-        .card b { color: var(--gold); font-size: 1.6rem; display: block; margin-bottom: 5px; }
-        
-        .mem-img { width: 100%; border-radius: 15px; margin-bottom: 10px; border: 2px solid rgba(255,255,255,0.1); }
-        video { width: 100%; border-radius: 15px; margin-bottom: 10px; }
+        .card { background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .card b { color: var(--gold); font-size: 1.5rem; display: block; margin-bottom: 5px; }
+        .mem-img, video { width: 100%; border-radius: 15px; border: 1px solid var(--gold); }
 
-        /* --- THANK YOU SECTION --- */
-        .thank-you-box {
-            text-align: center; background: rgba(255,10,84,0.05); padding: 50px 30px;
-            border-radius: 30px; border: 2px dashed var(--accent); margin-top: 50px;
+        /* --- ROMANTIC LETTER --- */
+        .deep-letter {
+            background: rgba(0,0,0,0.3); padding: 50px 30px; border-radius: 30px;
+            border: 1px solid var(--gold); margin: 40px 0; text-align: center;
         }
-        .thank-you-box h2 { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--gold); }
-        .thank-you-box p { font-size: 1.1rem; line-height: 1.8; color: #ddd; margin: 20px 0; }
-        .names { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--accent); }
+        .deep-letter p { font-size: 1.1rem; line-height: 2; color: #ddd; white-space: pre-line; }
+
+        .thank-you-box {
+            text-align: center; background: rgba(255, 77, 109, 0.1); padding: 50px 20px;
+            border-radius: 30px; border: 1px solid var(--gold);
+        }
+        .names { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); margin-top: 15px; }
+
+        footer { text-align: center; padding: 40px; color: var(--gold); font-size: 0.8rem; letter-spacing: 2px; }
     </style>
 </head>
 <body>
@@ -102,49 +110,51 @@
 
     <div id="authModal">
         <div class="auth-box">
-            <h2>Welcome My Universe</h2>
-            <p style="color:#aaa; margin-bottom:15px;">Enter details to enter our world</p>
-            <input type="text" id="nameIn" placeholder="Your Name" autocomplete="off">
-            <input type="password" id="passIn" placeholder="Secret Word (Bebe)" autocomplete="off">
-            <button class="auth-btn" onclick="unlock()">Unlock Love ❤️</button>
-            <p id="err" style="color:red; font-size:0.8rem; margin-top:10px; display:none;">Password is 'Bebe' jana!</p>
+            <h2 style="font-family:'Great Vibes'; color:var(--gold); font-size:2.5rem;">Hello Jana...</h2>
+            <p style="color:#ccc;">Humari khoobsurat duniya mein aapka swagat hai.</p>
+            <input type="text" id="nameIn" placeholder="Aapka Pyara Naam">
+            <input type="password" id="passIn" placeholder="Secret Word (Bebe)">
+            <button class="auth-btn" onclick="checkAuth()">Unlock Love ❤️</button>
+            <p id="err" style="color:var(--accent); font-size:0.8rem; margin-top:10px; display:none;">Galat Password! 'Bebe' likhiye jana!</p>
         </div>
     </div>
 
-    <div class="hearts-container" id="hearts"></div>
+    <div id="greetingOverlay">
+        <div class="greet-card">
+            <div style="font-size: 50px;">🧸</div>
+            <h1>Happy Anniversary Jana!</h1>
+            <p>Aaj humare khoobsurat safar ko ek saal poora ho gaya hai. Aap mere jeevan ki wo sabse pyari haqeeqat hain jiska maine hamesha khwaab dekha tha. Aap mere saath hain, toh mujhe duniya ki har khushi mil gayi hai.</p>
+            <hr style="border:0; border-top:1px solid var(--gold); margin:20px 0;">
+            <p style="font-weight: bold; font-size: 1.2rem; color: var(--gold);">Aap kaisi hain jana?</p>
+            <input type="text" id="replyIn" class="reply-box" placeholder="Yahan apna jawab likhein...">
+            <br>
+            <button class="auth-btn" style="margin-top:20px;" onclick="finalizeGreeting()">Enter Our World</button>
+        </div>
+    </div>
 
     <div id="main-content">
         <header>
-            <div style="background:var(--accent); padding:5px 20px; border-radius:50px; font-weight:bold; margin-bottom:15px;">1st Anniversary</div>
-            <h1 id="userHeading">Munnu & Me</h1>
-            <p style="font-family:'Great Vibes', cursive; font-size:2.2rem; color:var(--gold);">Forever and Always</p>
+            <div style="background:var(--gold); color:#300; padding:5px 20px; border-radius:50px; font-weight:bold; margin-bottom:15px; font-size:0.8rem;">CELEBRATING 1 YEAR</div>
+            <h1 id="userHeading">Munnu <span class="heart-beat">❤️</span> Farhan</h1>
+            <p style="font-family:'Great Vibes', cursive; font-size:2rem; color:var(--gold);">Forever and Always, Jana</p>
         </header>
 
         <section>
-            <h2 class="title">Special Dates</h2>
+            <h2 class="title">Khaas Dates</h2>
             <div class="grid">
-                <div class="card"><b>15.05.2008</b>My Birthday</div>
-                <div class="card"><b>28.09.2009</b>Jana's Birthday</div>
-                <div class="card" style="border: 1px solid var(--accent);"><b>28.09.2024</b>Our Anniversary ❤️</div>
-                <div class="card"><b>19.01.2025</b>Special Memory</div>
+                <div class="card"><b>15.05.2008</b>Aapka Birthday</div>
+                <div class="card"><b>28.09.2009</b>Mera Birthday</div>
+                <div class="card" style="border: 2px solid var(--gold);"><b>28.09.2024</b>Humari Anniversary ❤️</div>
+                <div class="card"><b>∞</b>Hamesha ke liye</div>
             </div>
         </section>
 
         <section>
-            <h2 class="title">Our Favorites</h2>
+            <h2 class="title">Humari Yaadein</h2>
             <div class="grid">
-                <div class="card"><h3>🍔 Favorite Food</h3><p>Momo,Chatpate and everything we share together from the same plate.</p></div>
-                <div class="card"><h3>📍 Favorite Place</h3><p>Anywhere, Especially Hubby's Heart,as long as I am holding your hand. Specially under the stars.</p></div>
-                <div class="card"><h3>🎵 Favorite Song</h3><p>Mere Humsafar, Ek Tarfa ,every song that reminds me of your beautiful smile.</p></div>
-            </div>
-        </section>
-
-        <section>
-            <h2 class="title">Our Memories</h2>
-            <div class="grid">
-                <div class="card"><img src="imagekeep/1.jpg" class="mem-img"><p>The Beginning 💖</p></div>
-                <div class="card"><img src="imagekeep/2.jpg" class="mem-img"><p>Your Beautiful Smile 😊</p></div>
-                <div class="card"><img src="imagekeep/3.jpg" class="mem-img"><p>Us Forever 🧿</p></div>
+                <div class="card"><img src="imagekeep/1.jpg" class="mem-img"><p>Jahan se sab shuru hua 💖</p></div>
+                <div class="card"><img src="imagekeep/2.jpg" class="mem-img"><p>Aapki wo pyari si muskan 😊</p></div>
+                <div class="card"><img src="imagekeep/3.jpg" class="mem-img"><p>Ek dooje ke liye 🧿</p></div>
             </div>
         </section>
 
@@ -157,84 +167,72 @@
             </div>
         </section>
 
-        <section style="text-align: center;">
-            <div style="background:var(--glass); padding:40px; border-radius:20px; border-left: 5px solid var(--accent);">
-                <p style="font-style: italic; font-size: 1.2rem;">
-                    "Aapk saath hona hi kaafi hai,<br>
-                    Mere chehre ki muskurahat ke liye.<br>
-                    Ek saal toh bas ek shuruat hai,<br>
-                    Humein saath rehna hai puri qayamat ke liye."
+        <section>
+            <div class="deep-letter">
+                <h2 style="font-family:'Great Vibes'; color:var(--gold); font-size:2.8rem; margin-bottom:20px;">Mere Dil Ki Baat...</h2>
+                <p>
+                    Meri pyari jana,
+                    Jaun Elia ne kaha tha, "Jo guzri mujh par, wo tum par bhi guzregi..." lekin main chahta hoon ki aap par sirf khushiyan guzrein. Aap meri zindagi ka wo hissa hain jise main kabhi khud se alag nahi karna chahta. 
+
+                    Is ek saal mein aapne mujhe sikhaya ki mohabbat kya hoti hai. Faraz ke lafzon mein kahoon toh, "Zindagi ko humne sirf aapke aane se mehsoos kiya hai." Aapki respect, aapki saadgi aur aapka mere prati wo 'Aap' wala lehza, mujhe har din aapka aur zyada deewana bana deta hai. 
+
+                    Aap meri ibaadat hain. Main dua karta hoon ki aane wale saikdon saal hum aise hi saath rahein. Aapki aankhon mein kabhi aansu na aayein, aur aapke chehre ki muskurahat kabhi kam na ho. 
+
+                    Aap jaisa koi nahi hai, aur na hi kabhi hoga.
                 </p>
+                <div style="font-family:'Great Vibes'; font-size:1.8rem; color:var(--gold); margin-top:20px;">— Hamesha ke liye aapka, Farhan</div>
             </div>
         </section>
 
         <section>
             <div class="thank-you-box">
-                <h2>Thank You ❤️Jana</h2>
+                <h2>Shukriya ❤️ Jana</h2>
                 <p>
-                    हमेशा मेरे साथ रहने के लिए आपका बहुत-बहुत शुक्रिया। ऐसे ही मेरे साथ रहिए, हमसे प्यार करते रहिए और हमें ढेर सारा प्यार देते रहिए। हमें समझाइए, हमें डांटिए, और हमें हमेशा ऐसे ही खुश रखिए। हम दोनों हमेशा ऐसे ही साथ रहें, यही दुआ है।
+                    Mere saath rehne ke liye aapka bahut-bahut shukriya. Aise hi mere saath rahiye, humse pyar karte rahiye. Humein samjhaiye, humein daantiye, aur humein hamesha aise hi khush rakhiye. Hum dono hamesha aise hi saath rahein, yahi khuda se dua hai.
                 </p>
-                <div class="names"> Munnu  & Farhan</div>
+                <div class="names"> Munnu ❤️ Farhan </div>
                 <div style="font-size: 2rem; margin-top: 15px;">💖🧿❤️</div>
+                <p id="finalWish" style="margin-top: 30px; font-weight: bold; color: var(--gold);"></p>
             </div>
         </section>
 
-        <footer style="text-align: center; padding: 40px; color: #666; font-size: 0.8rem;">
-            Made with infinite love for you.
+        <footer>
+            MADE WITH ∞ Love 💕 FOR YOU, JANA
         </footer>
     </div>
 
     <script>
-        function unlock() {
-            const pass = document.getElementById('passIn').value;
-            const name = document.getElementById('nameIn').value;
-            if(pass === 'Bebe') {
-                const modal = document.getElementById('authModal');
-                const content = document.getElementById('main-content');
-                
-                modal.style.transform = 'translateY(-100%)';
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                    content.style.display = 'block';
-                    setTimeout(() => { content.style.opacity = '1'; }, 50);
-                }, 600);
+        let userName = "";
 
-                if(name) document.getElementById('userHeading').innerText = name + " & Me";
-                initJelly();
+        function checkAuth() {
+            const pass = document.getElementById('passIn').value;
+            userName = document.getElementById('nameIn').value;
+            if(pass.toLowerCase() === 'bebe') {
+                document.getElementById('authModal').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('authModal').style.display = 'none';
+                    document.getElementById('greetingOverlay').style.display = 'flex';
+                }, 800);
             } else {
                 document.getElementById('err').style.display = 'block';
             }
         }
 
-        // Hearts Generator
-        const heartContainer = document.getElementById('hearts');
-        for (let i = 0; i < 30; i++) {
-            const h = document.createElement('div');
-            h.classList.add('heart');
-            h.innerText = '❤️';
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.fontSize = (Math.random() * 15 + 10) + 'px';
-            h.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            h.style.animationDelay = Math.random() * 5 + 's';
-            heartContainer.appendChild(h);
-        }
-
-        // Jelly Scroll Function
-        function initJelly() {
-            const container = document.getElementById('main-content');
-            let current = 0, target = 0, skew = 0;
-
-            function scrollAnimate() {
-                target = window.scrollY;
-                current += (target - current) * 0.1;
-                skew = (target - current) * 0.15;
-                if (skew > 7) skew = 7; if (skew < -7) skew = -7;
-                container.style.transform = `skewY(${skew}deg)`;
-                requestAnimationFrame(scrollAnimate);
-            }
-            scrollAnimate();
+        function finalizeGreeting() {
+            alert("Have a good day jana! ❤️");
+            document.getElementById('greetingOverlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('greetingOverlay').style.display = 'none';
+                const content = document.getElementById('main-content');
+                content.style.display = 'block';
+                if(userName) {
+                    document.getElementById('userHeading').innerHTML = userName + ' <span class="heart-beat">❤️</span> Farhan';
+                }
+                document.getElementById('finalWish').innerText = "Have a good day jana!";
+                setTimeout(() => { content.style.opacity = '1'; }, 100);
+            }, 800);
         }
     </script>
 </body>
 </html>
-                                                                                                                                             
+                
