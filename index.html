@@ -1,1 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our one year anniversary 🫶🏻🫂 Babe</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;1,700&family=Poppins:wght@300;400;600&family=Orbitron:wght@600&family=Caveat:wght@700&family=Sacramento&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
+    <style>
+        :root {
+            --gold: #f3cf7a;
+            --accent: #ff4d6d;
+            --bg-dark: #0a0104;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--bg-dark); 
+            color: #fff; 
+            font-family: 'Poppins', sans-serif; 
+            overflow-x: hidden; 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #canvas-bg { position: fixed; inset: 0; z-index: -1; }
+
+        /* LUXURY AUTH */
+        #auth-overlay {
+            position: fixed; inset: 0; z-index: 9999; display: flex; 
+            align-items: center; justify-content: center; background: #000;
+        }
+        .auth-panel {
+            text-align: center; width: 90%; max-width: 420px; padding: 35px;
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 30px;
+            background: rgba(10, 1, 4, 0.8); backdrop-filter: blur(25px);
+            box-shadow: 0 0 40px rgba(255, 77, 109, 0.2);
+        }
+        .auth-panel h1 { font-family: 'Great Vibes'; font-size: 3rem; color: var(--gold); margin-bottom: 10px; }
+        .hinglish-poetry {
+            font-family: 'Playfair Display'; font-style: italic; font-size: 1rem;
+            color: #ff8fa3; margin-bottom: 25px; line-height: 1.5;
+        }
+        .auth-panel input {
+            width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 12px;
+            border: 1px solid var(--gold); background: transparent; color: white;
+            text-align: center; font-size: 1rem; outline: none;
+        }
+        .enter-btn {
+            background: var(--gold); color: #000; padding: 12px 30px; 
+            border: none; border-radius: 25px; font-weight: 700; cursor: pointer;
+            transition: 0.3s; width: 100%;
+        }
+
+        /* MAIN APP CONTENT */
+        #app-content { display: none; opacity: 0; }
+
+        .lux-clock {
+            position: fixed; top: 20px; width: 100%; text-align: center;
+            z-index: 100; font-family: 'Orbitron'; font-size: 0.8rem;
+            color: var(--gold); letter-spacing: 3px; pointer-events: none;
+        }
+
+        .hero-title {
+            height: 90vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center;
+            position: relative;
+        }
+        .cute-name {
+            font-family: 'Sacramento', crossorigin;
+            font-size: clamp(4rem, 12vw, 7rem);
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(243, 207, 122, 0.4);
+            margin-bottom: -10px;
+        }
+        .est-date { font-family: 'Caveat', cursive; font-size: 1.8rem; color: #fff; opacity: 0.9; }
+
+        .clean-section { max-width: 1000px; margin: 80px auto; padding: 20px; }
+        .section-header {
+            text-align: center; font-family: 'Great Vibes'; font-size: 3.5rem; 
+            color: var(--gold); margin-bottom: 30px;
+        }
+
+        /* NEON MORPHING EFFECT */
+        @keyframes neonMorph {
+            0% { border-color: var(--gold); box-shadow: 0 0 10px rgba(243, 207, 122, 0.3); }
+            33% { border-color: var(--accent); box-shadow: 0 0 10px rgba(255, 77, 109, 0.3); }
+            66% { border-color: #a855f7; box-shadow: 0 0 10px rgba(168, 85, 247, 0.3); }
+            100% { border-color: var(--gold); box-shadow: 0 0 10px rgba(243, 207, 122, 0.3); }
+        }
+
+        .info-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px; margin-bottom: 40px;
+        }
+        .info-card {
+            background: rgba(255,255,255,0.03); border: 1.5px solid var(--gold);
+            padding: 25px; border-radius: 20px; text-align: center;
+            backdrop-filter: blur(10px);
+            animation: neonMorph 6s infinite ease-in-out;
+        }
+        .info-card b { color: var(--gold); display: block; font-size: 1.3rem; margin-bottom: 5px; font-family: 'Playfair Display'; }
+        .info-card small { font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; color: #ff8fa3; }
+
+        /* EHSAAS SECTION (400 WORDS) */
+        .ehsaas-content {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 50px;
+            border-radius: 40px;
+            line-height: 2;
+            text-align: justify;
+            font-size: 1.1rem;
+            border: 1px solid rgba(243, 207, 122, 0.15);
+            animation: neonMorph 10s infinite alternate;
+        }
+        .ehsaas-content span { color: var(--gold); font-weight: 600; }
+
+        /* POETRY CINEMATIC */
+        .poetry-container { text-align: center; position: relative; padding: 60px 0; }
+        .poetry-line {
+            font-family: 'Playfair Display'; font-size: 1.4rem; margin: 40px 0;
+            opacity: 0.1; transition: 0.7s; transform: translateY(10px);
+        }
+        .poetry-line.active { opacity: 1; transform: translateY(0) scale(1.05); color: var(--gold); }
+
+        /* GALLERY */
+        .lux-gallery {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px; margin: 30px 0;
+        }
+        .lux-item { border-radius: 20px; overflow: hidden; aspect-ratio: 4/5; border: 1px solid rgba(255,255,255,0.1); }
+        .lux-item img, .lux-item video { width: 100%; height: 100%; object-fit: cover; }
+
+        /* CAKE */
+        #cake-stage { height: 650px; position: relative; margin: 80px 0; text-align: center; }
+        #cake-3d-canvas { width: 100%; height: 450px; }
+        .cut-action {
+            margin-top: 20px; background: transparent; border: 1.5px solid var(--gold);
+            color: var(--gold); padding: 12px 40px; border-radius: 100px;
+            font-size: 1.1rem; cursor: pointer; transition: 0.3s;
+        }
+
+        /* THANK YOU NEON */
+        .holograph {
+            padding: 50px 25px; border-radius: 30px; text-align: center;
+            border: 2px solid var(--gold);
+            animation: neonMorph 8s infinite ease-in-out;
+        }
+        .holograph p { font-size: 1.1rem; line-height: 1.8; font-style: italic; color: #eee; }
+
+        footer { text-align: center; padding: 80px; font-family: 'Great Vibes'; font-size: 2.2rem; color: var(--gold); opacity: 0.6; }
+    </style>
+</head>
+<body>
+
+    <div class="lux-clock" id="clock">00:00:00</div>
+    <canvas id="canvas-bg"></canvas>
+
+    <div id="auth-overlay">
+        <div class="auth-panel">
+            <h1>Meri Jana...</h1>
+            <div class="hinglish-poetry">
+                "Apke intezaar mein har pal guzarna sikha hai,<br>
+                Aapkii muskurahat par dil harna sikha hai."
+            </div>
+            <input type="password" id="passkey" placeholder="Enter Password">
+            <button class="enter-btn" onclick="revealWorld()">Presh Kariye 🫶🏻</button>
+        </div>
+    </div>
+
+    <div id="app-content">
+        <div class="hero-title">
+            <h1 class="cute-name">Munnu ❤️ Farhan</h1>
+            <p class="est-date">Estd. 27.09.2024</p>
+        </div>
+
+        <div class="clean-section">
+            <h2 class="section-header">Important Dates ✨</h2>
+            <div class="info-grid">
+                <div class="info-card"><b>15.05.2008</b><small>Farhan's Birthday</small></div>
+                <div class="info-card"><b>28.09.2009</b><small>Guduu's Birthday</small></div>
+                <div class="info-card"><b>27.09.2024</b><small>1st Anniversary</small></div>
+                <div class="info-card"><b>19.01.2025</b><small>Special Anniversary</small></div>
+            </div> class="info-card"><b>25.12.2025</b>
+<small>Our last together picnic</small></div>
+        </div>
+
+        <div class="clean-section">
+            <h2 class="section-header">Your Favorites 🧿</h2>
+            <div class="info-grid">
+                <div class="info-card"><b>Hubby's Heart</b><small>Favorite Place</small></div>
+                <div class="info-card"><b>Momos</b><small>Favorite Food</small></div>
+                <div class="info-card"><b>Black</b><small>Favorite Color</small></div>
+                <div class="info-card"><b>Ek Tarfa, Humsafar, Finding Her</b><small>Favorite Songs</small></div>
+                <div class="info-card"><b>Sinchan</b><small>Favorite Cartoon</small></div>
+            </div>
+        </div>
+
+        <div class="clean-section poetry-container">
+            <h2 style="font-family: 'Great Vibes'; font-size: 3.5rem; color: var(--accent); margin-bottom: 30px;">Dil Ki Baat...</h2>
+            <div class="poetry-line">"Tu ne dekha hai kabhi ek nazar se mujhko, Meri duniya teri aankhon mein dikhai di hai."</div>
+            <div class="poetry-line">"Log kehte hain ki mohabbat ek baar hoti hai, Lekin main jab bhi aapko dekhta hoon, mujhe har baar hoti hai."</div>
+            <div class="poetry-line">"Main ne jab likhna sikhaya tha mohabbat ko, Sab se pehle tera naam likha tha main ne."</div>
+            <div class="poetry-line">"Tum mere liye wo ibadat ho, Jisey main har roz dohrana chahta hoon."</div>
+            <div class="poetry-line">"Duniya ko kya khabar ki mera sukoon kahan hai, Jahan tum ho, mera pura jahan wahan hai."</div>
+            <div class="poetry-line">"Sitaare noch kar le jaunga main ghar ke aangan mein, Agar tum muskura kar mujhse baatein karti rahoge."</div>
+            <div class="poetry-line">"Bas ek tamanna hai meri ki umr bhar, Tum mere paas raho aur main tumhara rahoon."</div>
+            <div class="poetry-line">"Hazaaron dukh hon phir bhi ek sukoon rehta hai, Tumhare saath hona mere dil ki dhadkan rehta hai."</div>
+            <div class="poetry-line">"Ujala apni yaadon ka humare saath rehne do, Na jaane kis gali mein zindagi ki shaam ho jaye."</div>
+            <div class="poetry-line">"Mohabbat mein nahi hai farq jine aur marne ka, Usi ko dekh kar jite hain jis kafir pe dam nikle."</div>
+        </div>
+
+        <!-- NEW 400 WORD SECTION -->
+        <div class="clean-section">
+            <h2 class="section-header">Ehsaas-e-Muhabbat 🌹</h2>
+            <div class="ehsaas-content">
+                Meri pyari Guduu, <span>Aap</span> sirf meri pasand nahi, <span>aap</span> meri ruh ki zaroorat ban chuki hain. Hamara safar shayad utna asaan nahi raha, par har ek mushkil ne humein aur kareeb laya hai. <span>Aapke</span> saath bitaya gaya har lamha mere liye kisi khazane se kam nahi. Jab bhi main girne lagta hoon, <span>aapki</span> himmat aur <span>aapka</span> bharosa mujhe phir se khada kar deta hai. Trust, yani vishwas, hamari is kahani ki wo buniyad hai jispar maine apne pure jahan ki khushiyan tiki hui dekhi hain. <span>Aapne</span> mujh par tab bhi bharosa kiya jab duniya mujh par sawal utha rahi thi, aur wahi <span>aapki</span> sabse badi khoobi hai jo mujhe <span>aapka</span> hamesha ke liye mureed bana deti hai.<br><br>
+                Zindagi ke struggle mein aksar log saath chhod dete hain, par <span>aapne</span> dikhaya ki sacha pyar wahi hai jo andheri raaton mein bhi haath tham kar ujale ki taraf le jaye. Aaj hum jis success aur khushi ki taraf badh rahe hain, usme meri mehnat kam aur <span>aapki</span> duaein zyada shamil hain. <span>Aapka</span> mujhse itna care karna, chhoti-chhoti baaton par mera dhyan rakhna, aur har baar meri galtiyon ko maaf karke mujhe ek behtar insan banana, ye sab meri zindagi ki sabse badi jeet hai. Mere liye <span>aapki</span> importance lafzon mein bayaan karna namumkin hai, bas itna samajh lijiye ki <span>aap</span> meri wo 'Sukoon' hain jise main har namaz mein mangta hoon.<br><br>
+                Mohabbat sirf 'I Love You' kehne ka naam nahi hai, balki ye <span>aapke</span> saath us izzat ka rishta hai jahan main har pal <span>aapki</span> salamti ki dua karta hoon. <span>Aapka</span> mujh par itna comfortable hona meri zindagi ka sabse bada reward hai. Main wada karta hoon ki duniya ki kisi bhi mod par, chahe kitne bhi struggle kyun na aayein, main <span>aapka</span> haath kabhi nahi chhodunga. Hum milkar har success ko celebrate karenge aur har gam ko adha baat lenge. <span>Aap</span> meri jaan hain, mera maan hain, aur mere liye sabse uncha samman hain. Isi tarah mere saath rahiye, kyunki <span>aapke</span> bina main bilkul adhura hoon. Main aapse be-had mohabbat karta hoon.
+            </div>
+        </div>
+
+        <div class="clean-section">
+            <h2 class="section-header">Precious Moments </h2>
+            <div class="lux-gallery">
+                <div class="lux-item"><img src="imagekeep/1.jpg"></div>
+                <div class="lux-item"><img src="imagekeep/2.jpg"></div>
+                <div class="lux-item"><img src="imagekeep/3.jpg"></div>
+                <div class="lux-item"><video controls><source src="imagekeep/1Video.mp4"></video></div>
+                <div class="lux-item"><video controls><source src="imagekeep/2Videos.mp4"></video></div>
+                <div class="lux-item"><video controls><source src="imagekeep/Video3.mp4"></video></div>
+            </div>
+        </div>
+
+        <div id="cake-stage">
+            <h2 style="font-family: 'Great Vibes'; font-size: 4rem; color: var(--gold);">Cut Our Cake, Jana!</h2>
+            <div id="cake-3d-canvas"></div>
+            <button class="cut-action" id="cut-btn" onclick="performCleanCut()">Slice the Cake 🕯️</button>
+        </div>
+
+        <div class="clean-section holograph">
+            <h2 style="font-family: 'Great Vibes'; font-size: 4rem; color: var(--gold); margin-bottom: 25px;">Thank You Jana ❤️</h2>
+            <p>
+                Aapne meri zindagi ko mukammal kiya hai. Aapka mere saath hona hi meri sabse badi khushi hai. 
+                Aap mere saath itni comfortable hain, ye dekh kar mujhe bahut sukoon milta hai. 
+                Aap hamesha mere paas safe rahengi. Main aapse bahut mohabbat karta hoon, aap meri jaan hain.
+            </p>
+            <div style="font-family: 'Great Vibes'; font-size: 2.8rem; margin-top: 30px; color: var(--gold);">Munnu ❤️ Farhan</div>
+        </div>
+
+        <footer>Eternity is not long enough.. Love You Forever ♾️🫂.</footer>
+    </div>
+
+    <script>
+        let scene, camera, renderer, particles, cakeLeft, cakeRight, cakeGroup;
+
+        function revealWorld() {
+            const key = document.getElementById('passkey').value;
+            if(key.toLowerCase() === 'bebe') {
+                gsap.to("#auth-overlay", { opacity: 0, scale: 1.1, duration: 1, onComplete: () => {
+                    document.getElementById('auth-overlay').remove();
+                    document.getElementById('app-content').style.display = 'block';
+                    gsap.to("#app-content", { opacity: 1, duration: 1.5 });
+                    initThreeBackground();
+                    initThreeCake();
+                }});
+            }
+        }
+
+        function initThreeBackground() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas-bg'), antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const starGeo = new THREE.BufferGeometry();
+            const starPos = [];
+            for(let i=0; i<3000; i++) {
+                starPos.push(THREE.MathUtils.randFloatSpread(100), THREE.MathUtils.randFloatSpread(100), THREE.MathUtils.randFloatSpread(100));
+            }
+            starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starPos, 3));
+            particles = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xf3cf7a, size: 0.08, transparent: true, opacity: 0.5 }));
+            scene.add(particles);
+
+            camera.position.z = 50;
+            const animate = () => {
+                requestAnimationFrame(animate);
+                particles.rotation.y += 0.0003;
+                renderer.render(scene, camera);
+            };
+            animate();
+        }
+
+        function initThreeCake() {
+            const container = document.getElementById('cake-3d-canvas');
+            const cRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            cRenderer.setSize(container.clientWidth, 450);
+            container.appendChild(cRenderer.domElement);
+
+            const cScene = new THREE.Scene();
+            cakeGroup = new THREE.Group();
+
+            const mat = new THREE.MeshPhongMaterial({ color: 0xfff0f5, shininess: 80 });
+            const topMat = new THREE.MeshPhongMaterial({ color: 0xff8fa3 });
+
+            cakeLeft = new THREE.Group();
+            const cakeL = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 4, 32, 1, false, Math.PI, Math.PI), mat);
+            const icingL = new THREE.Mesh(new THREE.CylinderGeometry(5.1, 5.1, 0.5, 32, 1, false, Math.PI, Math.PI), topMat);
+            icingL.position.y = 2.1;
+            cakeLeft.add(cakeL, icingL);
+
+            cakeRight = new THREE.Group();
+            const cakeR = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 4, 32, 1, false, 0, Math.PI), mat);
+            const icingR = new THREE.Mesh(new THREE.CylinderGeometry(5.1, 5.1, 0.5, 32, 1, false, 0, Math.PI), topMat);
+            icingR.position.y = 2.1;
+            cakeRight.add(cakeR, icingR);
+
+            cakeGroup.add(cakeLeft, cakeRight);
+            cScene.add(cakeGroup, new THREE.AmbientLight(0xffffff, 1), new THREE.PointLight(0xffffff, 1.2));
+
+            const cCam = new THREE.PerspectiveCamera(45, container.clientWidth/450, 0.1, 100);
+            cCam.position.set(0, 8, 20);
+            cCam.lookAt(0,0,0);
+
+            const loop = () => {
+                requestAnimationFrame(loop);
+                cakeGroup.rotation.y += 0.005;
+                cRenderer.render(cScene, cCam);
+            };
+            loop();
+        }
+
+        function performCleanCut() {
+            gsap.to(cakeLeft.position, { x: -6, duration: 2, ease: "power3.out" });
+            gsap.to(cakeRight.position, { x: 6, duration: 2, ease: "power3.out" });
+            
+            document.getElementById('cut-btn').innerText = "Happy Anniversary! ❤️";
+            
+            for(let i=0; i<50; i++) {
+                const dot = document.createElement('div');
+                dot.style.cssText = `position:fixed; left:50%; top:50%; font-size:20px; z-index:1000;`;
+                dot.innerText = i % 2 === 0 ? '❤️' : '✨';
+                document.body.appendChild(dot);
+                gsap.to(dot, {
+                    x: (Math.random()-0.5)*1500,
+                    y: (Math.random()-0.5)*1500,
+                    opacity: 0,
+                    duration: 2.5,
+                    onComplete: () => dot.remove()
+                });
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.poetry-line').forEach(line => {
+                const rect = line.getBoundingClientRect();
+                const center = window.innerHeight / 2;
+                if(Math.abs(rect.top + rect.height/2 - center) < 100) line.classList.add('active');
+                else line.classList.remove('active');
+            });
+        });
+
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString();
+        }, 1000);
+    </script>
+</body>
+</html>
